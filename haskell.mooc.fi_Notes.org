@@ -3,17 +3,46 @@
 #+DATE: <2026-05-19 Tue>
 #+STARTUP: indent option entitiespretty
 
-#+LaTeX_CLASS: report
-#+LATEX_COMPILER: lualatex
-#+LATEX_HEADER: \usepackage{fontspec}
-#+LATEX_HEADER: \usepackage{graphicx}
-#+LATEX_HEADER: \usepackage[utf8]{inputenc}
-#+LATEX_HEADER: \usepackage{tikz, pgfplots}
-#+LATEX_HEADER: \usetikzlibrary{shapes.geometric, positioning}
-#+LATEX_HEADER: \usepackage{svg}
+# LaTeX Configs
+#+LATEX_COMPILER: xelatex
+#+LaTeX_CLASS: scrbook
+# #+LaTeX_CLASS_OPTIONS: [11pt,twoside=semi,openright,numbers=noenddot]
+#+LaTeX_CLASS_OPTIONS: [11pt,twoside=off,openright,numbers=noenddot]
+#+LATEX_HEADER: \usepackage[sexy]{evan}
+#+LATEX_HEADER: \usepackage[table,x11names]{xcolor}
+# See all colors here: https://mirror.csclub.uwaterloo.ca/CTAN/macros/latex/contrib/xcolor/xcolor.pdf
 
-#+LATEX_HEADER: \usepackage{emoji}
+#+LATEX_HEADER: \usepackage{geometry}
+#+LATEX_HEADER: \geometry{
+#+LATEX_HEADER:   letterpaper,
+# #+LATEX_HEADER: total={175mm,250mm},
+# #+LATEX_HEADER: left=15mm,
+# #+LATEX_HEADER: top=20mm,
+#+LATEX_HEADER: }
 
+
+# #+begin_abstract
+# In this document, we are storing brief notes on Haskell as we learn it through Haskell-MOOC.fi and other resources.
+# #+end_abstract
+
+
+# #+latex: \begin{abstract}
+# #+latex: In this document, we are storing brief notes on Haskell as we learn it through Haskell-MOOC.fi and other resources.
+# #+latex: \end{abstract}
+
+
+# #+latex: \chapter*{Abstract}
+# #+latex: \addcontentsline{toc}{chapter}{Abstract}
+# #+latex: This book explores the foundational concepts of... % Your text here
+# #+latex: \mainmatter
+
+* Abstract
+:PROPERTIES:
+:UNNUMBERED: t
+:END:
+#+LATEX: \addcontentsline{toc}{chapter}{Abstract}
+
+Here we are documenting our learning in Haskell through Haskell-MOOC.fi and then some.
 
 
 * Lecture 1: And so It Begins
@@ -21,76 +50,76 @@
 - Functional, pure, and lazy
 - Strongly typed with type inference
 - Garbage collected and compiled
-- *Tooling*: `stack ghci` (REPL), `:t` (type), `:load`, `:reload`
+- *Tooling*: =stack ghci= (REPL), =:t= (type), =:load=, =:reload=
 
 ** Fundamental Concepts
 - *Expressions*: Everything is an expression (no statements)
-- *Application*: `f x y` (not `f(x,y)`); function calls bind tightest
-- *Basic Types*: `Int`, `Integer`, `Double`, `Bool`, `String` (`[Char]`)
-- *Currying*: `a -> b -> c` represents multi-argument functions
+- *Application*: =f x y= (not =f(x,y)=); function calls bind tightest
+- *Basic Types*: =Int=, =Integer=, =Double=, =Bool=, =String= (=[Char]=)
+- *Currying*: =a -> b -> c= represents multi-argument functions
 
 ** Program Structure
 - *Modules*: One per file
 - *Definitions*: Optional type signature + equations
-- *Logic*: `if...then...else` (else is mandatory), `where`/`let`
+- *Logic*: =if...then...else= (else is mandatory), =where=/=let=
 - *Immutability*: Bindings are constant; "updates" create new values
 
 * Lecture 2: Recursion & Lists
 ** Recursion & Control Flow
-- *Helper Functions*: Often marked with `'` (e.g., `fibonacci'`) to manage state
+- *Helper Functions*: Often marked with ='= (e.g., =fibonacci'=) to manage state
 - *Tail Recursion*: Recursive call is the last action $\rightarrow$ optimizes to a loop
-- *Guards*: `| condition = value` (first true guard wins)
+- *Guards*: =| condition = value= (first true guard wins)
 
 ** Lists & Polymorphism
-- *Lists*: Homogeneous `[a]`, singly-linked, constructed via cons `:`
-- *Common Ops*: `head`, `tail`, `take`, `drop`, `++`, `!!`, `reverse`
-- *Polymorphism*: Lowercase type variables (e.g., `a`) determined by unification
+- *Lists*: Homogeneous =[a]=, singly-linked, constructed via cons =:=
+- *Common Ops*: =head=, =tail=, =take=, =drop=, =++=, =!!=, =reverse=
+- *Polymorphism*: Lowercase type variables (e.g., =a=) determined by unification
 
 ** Handling Optionality
-- *Maybe a*: `Nothing | Just x` (Safe alternative to null)
-- *Either a b*: `Left a | Right b` (Commonly used for success/error)
-- *Case expressions*: `case ... of` for complex pattern matching
+- *Maybe a*: =Nothing | Just x= (Safe alternative to null)
+- *Either a b*: =Left a | Right b= (Commonly used for success/error)
+- *Case expressions*: =case ... of= for complex pattern matching
 
 * Lecture 3: Higher-Order Functions
 ** Functions as First-Class Citizens
-- *HOFs*: Functions that take or return functions (e.g., `map`, `filter`)
-- *Partial Application*: `add 3` returns a function waiting for the second arg
-- *Sections*: Partially applied operators, e.g., `(+1)`, `(*2)`
+- *HOFs*: Functions that take or return functions (e.g., =map=, =filter=)
+- *Partial Application*: =add 3= returns a function waiting for the second arg
+- *Sections*: Partially applied operators, e.g., =(+1)=, =(*2)=
 
 ** Composition & Lambdas
-- *Composition*: `(f . g) x = f (g x)`
-- *Application Operator*: `$` (low precedence, avoids parentheses)
-- *Lambdas*: Anonymous functions `\x -> x + 1`
+- *Composition*: =(f . g) x = f (g x)=
+- *Application Operator*: =$= (low precedence, avoids parentheses)
+- *Lambdas*: Anonymous functions =\x -> x + 1=
 
 ** Advanced List Patterns
-- *Comprehensions*: `[x | x <- xs, cond]`
-- *Recursion Patterns*: Building via `:` and consuming via `x:xs`
-- *Typed Holes*: Using `_` to let GHC suggest missing types
+- *Comprehensions*: =[x | x <- xs, cond]=
+- *Recursion Patterns*: Building via =:= and consuming via =x:xs=
+- *Typed Holes*: Using =_= to let GHC suggest missing types
 
 * Lecture 4: Type Classes & Folds
 ** Tuples & Folds
-- *Tuples*: Fixed-length, mixed types; accessed via `fst`/`snd`
+- *Tuples*: Fixed-length, mixed types; accessed via =fst=/=snd=
 - *foldr*: "Crunches" a list into a single value
-  - `foldr f z [] = z`
-  - `foldr f z (x:xs) = f x (foldr f z xs)`
+  - =foldr f z [] = z=
+  - =foldr f z (x:xs) = f x (foldr f z xs)=
 
 ** Type Classes
 - *Definition*: Groups of types sharing common operations (not OOP classes)
-- *Constraints*: `(Eq a) => ...` restricts polymorphism to types that implement `Eq`
+- *Constraints*: =(Eq a) => ...= restricts polymorphism to types that implement =Eq=
 - *Key Classes*:
-  - `Eq` ($\approx$, $\neq$) and `Ord` ($<$, $>$, `compare`)
-  - `Num` $\rightarrow$ `Integral` / `Fractional` $\rightarrow$ `Floating`
-  - `Show` (to string) and `Read` (from string)
+  - =Eq= ($\approx$, $\neq$) and =Ord= ($<$, $>$, =compare=)
+  - =Num= $\rightarrow$ =Integral= / =Fractional= $\rightarrow$ =Floating=
+  - =Show= (to string) and =Read= (from string)
 
 * Lecture 5: Algebraic Datatypes (ADTs)
 ** Defining Custom Types
-- *ADTs*: Sum of constructors, product of fields (`data T = C1 | C2 Int String`)
-- *Deriving*: Automatic implementation of `Show`, `Eq`, `Read`
-- *Type Parameters*: Generic types, e.g., `data Maybe a`
+- *ADTs*: Sum of constructors, product of fields (=data T = C1 | C2 Int String=)
+- *Deriving*: Automatic implementation of =Show=, =Eq=, =Read=
+- *Type Parameters*: Generic types, e.g., =data Maybe a=
 
 ** Recursive Types & Trees
-- *Recursive Types*: Types that refer to themselves (e.g., custom `List a`)
-- *Trees*: `Node val left right | Empty`
+- *Recursive Types*: Types that refer to themselves (e.g., custom =List a=)
+- *Trees*: =Node val left right | Empty=
 - *Operations*: Height calculation, BST lookup, and insertion
 
 ** Record Syntax

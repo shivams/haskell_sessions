@@ -1,24 +1,13 @@
-% Created 2026-05-20 Wed 18:04
-% Intended LaTeX compiler: lualatex
-\documentclass[11pt]{report}
-
-\usepackage{amsmath}
-\usepackage{fontspec}
-\usepackage{graphicx}
-\usepackage{longtable}
-\usepackage{wrapfig}
-\usepackage{rotating}
-\usepackage[normalem]{ulem}
-\usepackage{capt-of}
-\usepackage{hyperref}
-\usepackage{minted}
-\usepackage{fontspec}
-\usepackage{graphicx}
-\usepackage[utf8]{inputenc}
-\usepackage{tikz, pgfplots}
-\usetikzlibrary{shapes.geometric, positioning}
-\usepackage{svg}
-\usepackage{emoji}
+% Created 2026-05-21 Thu 12:33
+% Intended LaTeX compiler: xelatex
+\documentclass[11pt,twoside=off,openright,numbers=noenddot]{scrbook}
+      \usepackage{minted}
+      \usepackage[sexy]{evan}
+\usepackage[table,x11names]{xcolor}
+\usepackage{geometry}
+\geometry{
+letterpaper,
+}
 \author{Jiang and Sharma}
 \date{\textit{<2026-05-19 Tue>}}
 \title{HaskellMOOC.fi Notes}
@@ -34,130 +23,135 @@
 \maketitle
 \tableofcontents
 
-\part{Lecture 1: And so It Begins}
-\label{sec:org0b40bb5}
-\chapter{Haskell Characteristics}
-\label{sec:org66702ed}
+\chapter*{Abstract}
+\label{sec:org3a1872b}
+\addcontentsline{toc}{chapter}{Abstract}
+
+Here we are documenting our learning in Haskell through Haskell-MOOC.fi and then some.
+\chapter{Lecture 1: And so It Begins}
+\label{sec:org74b95ff}
+\section{Haskell Characteristics}
+\label{sec:org20221f6}
 \begin{itemize}
 \item Functional, pure, and lazy
 \item Strongly typed with type inference
 \item Garbage collected and compiled
-\item \textbf{Tooling}: `stack ghci` (REPL), `:t` (type), `:load`, `:reload`
+\item \textbf{Tooling}: \texttt{stack ghci} (REPL), \texttt{:t} (type), \texttt{:load}, \texttt{:reload}
 \end{itemize}
-\chapter{Fundamental Concepts}
-\label{sec:orgf5dadfa}
+\section{Fundamental Concepts}
+\label{sec:org33be1ca}
 \begin{itemize}
 \item \textbf{Expressions}: Everything is an expression (no statements)
-\item \textbf{Application}: `f x y` (not `f(x,y)`); function calls bind tightest
-\item \textbf{Basic Types}: `Int`, `Integer`, `Double`, `Bool`, `String` (`[Char]`)
-\item \textbf{Currying}: `a -> b -> c` represents multi-argument functions
+\item \textbf{Application}: \texttt{f x y} (not \texttt{f(x,y)}); function calls bind tightest
+\item \textbf{Basic Types}: \texttt{Int}, \texttt{Integer}, \texttt{Double}, \texttt{Bool}, \texttt{String} (\texttt{[Char]})
+\item \textbf{Currying}: \texttt{a -> b -> c} represents multi-argument functions
 \end{itemize}
-\chapter{Program Structure}
-\label{sec:orgd28a407}
+\section{Program Structure}
+\label{sec:orgfadcb47}
 \begin{itemize}
 \item \textbf{Modules}: One per file
 \item \textbf{Definitions}: Optional type signature + equations
-\item \textbf{Logic}: `if\ldots{}then\ldots{}else` (else is mandatory), `where`/`let`
+\item \textbf{Logic}: \texttt{if...then...else} (else is mandatory), \texttt{where=/=let}
 \item \textbf{Immutability}: Bindings are constant; ``updates'' create new values
 \end{itemize}
-\part{Lecture 2: Recursion \& Lists}
-\label{sec:orgbf0c043}
-\chapter{Recursion \& Control Flow}
-\label{sec:orgb8a05e5}
+\chapter{Lecture 2: Recursion \& Lists}
+\label{sec:org12df93a}
+\section{Recursion \& Control Flow}
+\label{sec:orga5f6e25}
 \begin{itemize}
-\item \textbf{Helper Functions}: Often marked with `'` (e.g., `fibonacci'`) to manage state
+\item \textbf{Helper Functions}: Often marked with \texttt{'} (e.g., \texttt{fibonacci'}) to manage state
 \item \textbf{Tail Recursion}: Recursive call is the last action \(\rightarrow\) optimizes to a loop
-\item \textbf{Guards}: `| condition = value` (first true guard wins)
+\item \textbf{Guards}: \texttt{| condition = value} (first true guard wins)
 \end{itemize}
-\chapter{Lists \& Polymorphism}
-\label{sec:orge35815c}
+\section{Lists \& Polymorphism}
+\label{sec:org28ca8fe}
 \begin{itemize}
-\item \textbf{Lists}: Homogeneous `[a]`, singly-linked, constructed via cons `:`
-\item \textbf{Common Ops}: `head`, `tail`, `take`, `drop`, `++`, `!!`, `reverse`
-\item \textbf{Polymorphism}: Lowercase type variables (e.g., `a`) determined by unification
+\item \textbf{Lists}: Homogeneous \texttt{[a]}, singly-linked, constructed via cons \texttt{:}
+\item \textbf{Common Ops}: \texttt{head}, \texttt{tail}, \texttt{take}, \texttt{drop}, \texttt{++}, \texttt{!!}, \texttt{reverse}
+\item \textbf{Polymorphism}: Lowercase type variables (e.g., \texttt{a}) determined by unification
 \end{itemize}
-\chapter{Handling Optionality}
-\label{sec:orgd432a5e}
+\section{Handling Optionality}
+\label{sec:org2ab370f}
 \begin{itemize}
-\item \textbf{Maybe a}: `Nothing | Just x` (Safe alternative to null)
-\item \textbf{Either a b}: `Left a | Right b` (Commonly used for success/error)
-\item \textbf{Case expressions}: `case \ldots{} of` for complex pattern matching
+\item \textbf{Maybe a}: \texttt{Nothing | Just x} (Safe alternative to null)
+\item \textbf{Either a b}: \texttt{Left a | Right b} (Commonly used for success/error)
+\item \textbf{Case expressions}: \texttt{case ... of} for complex pattern matching
 \end{itemize}
-\part{Lecture 3: Higher-Order Functions}
-\label{sec:org4b3d25a}
-\chapter{Functions as First-Class Citizens}
-\label{sec:orgb8266b8}
+\chapter{Lecture 3: Higher-Order Functions}
+\label{sec:org0154a36}
+\section{Functions as First-Class Citizens}
+\label{sec:org732ac5d}
 \begin{itemize}
-\item \textbf{HOFs}: Functions that take or return functions (e.g., `map`, `filter`)
-\item \textbf{Partial Application}: `add 3` returns a function waiting for the second arg
-\item \textbf{Sections}: Partially applied operators, e.g., `(+1)`, `(*2)`
+\item \textbf{HOFs}: Functions that take or return functions (e.g., \texttt{map}, \texttt{filter})
+\item \textbf{Partial Application}: \texttt{add 3} returns a function waiting for the second arg
+\item \textbf{Sections}: Partially applied operators, e.g., \texttt{(+1)}, \texttt{(*2)}
 \end{itemize}
-\chapter{Composition \& Lambdas}
-\label{sec:orge0f406e}
+\section{Composition \& Lambdas}
+\label{sec:org4f0bbc5}
 \begin{itemize}
-\item \textbf{Composition}: `(f . g) x = f (g x)`
-\item \textbf{Application Operator}: `\$` (low precedence, avoids parentheses)
-\item \textbf{Lambdas}: Anonymous functions `\x -> x + 1`
+\item \textbf{Composition}: \texttt{(f . g) x = f (g x)}
+\item \textbf{Application Operator}: \texttt{\$} (low precedence, avoids parentheses)
+\item \textbf{Lambdas}: Anonymous functions \texttt{\textbackslash{}x -> x + 1}
 \end{itemize}
-\chapter{Advanced List Patterns}
-\label{sec:org1efad50}
+\section{Advanced List Patterns}
+\label{sec:orgbec4f4c}
 \begin{itemize}
-\item \textbf{Comprehensions}: `[x | x <- xs, cond]`
-\item \textbf{Recursion Patterns}: Building via `:` and consuming via `x:xs`
-\item \textbf{Typed Holes}: Using `\_` to let GHC suggest missing types
+\item \textbf{Comprehensions}: \texttt{[x | x <- xs, cond]}
+\item \textbf{Recursion Patterns}: Building via \texttt{:} and consuming via \texttt{x:xs}
+\item \textbf{Typed Holes}: Using \texttt{\_} to let GHC suggest missing types
 \end{itemize}
-\part{Lecture 4: Type Classes \& Folds}
-\label{sec:org65d9151}
-\chapter{Tuples \& Folds}
-\label{sec:orgdcc31d4}
+\chapter{Lecture 4: Type Classes \& Folds}
+\label{sec:org14190aa}
+\section{Tuples \& Folds}
+\label{sec:org496ed99}
 \begin{itemize}
-\item \textbf{Tuples}: Fixed-length, mixed types; accessed via `fst`/`snd`
+\item \textbf{Tuples}: Fixed-length, mixed types; accessed via \texttt{fst=/=snd}
 \item \textbf{foldr}: ``Crunches'' a list into a single value
 \begin{itemize}
-\item `foldr f z [] = z`
-\item `foldr f z (x:xs) = f x (foldr f z xs)`
+\item \texttt{foldr f z [] = z}
+\item \texttt{foldr f z (x:xs) = f x (foldr f z xs)}
 \end{itemize}
 \end{itemize}
-\chapter{Type Classes}
-\label{sec:org37ee744}
+\section{Type Classes}
+\label{sec:org2394aad}
 \begin{itemize}
 \item \textbf{Definition}: Groups of types sharing common operations (not OOP classes)
-\item \textbf{Constraints}: `(Eq a) => \ldots{}` restricts polymorphism to types that implement `Eq`
+\item \textbf{Constraints}: \texttt{(Eq a) => ...} restricts polymorphism to types that implement \texttt{Eq}
 \item \textbf{Key Classes}:
 \begin{itemize}
-\item `Eq` (\(\approx\), \(\neq\)) and `Ord` (\(<\), \(>\), `compare`)
-\item `Num` \(\rightarrow\) `Integral` / `Fractional` \(\rightarrow\) `Floating`
-\item `Show` (to string) and `Read` (from string)
+\item \texttt{Eq} (\(\approx\), \(\neq\)) and \texttt{Ord} (\(<\), \(>\), \texttt{compare})
+\item \texttt{Num} \(\rightarrow\) \texttt{Integral} / \texttt{Fractional} \(\rightarrow\) \texttt{Floating}
+\item \texttt{Show} (to string) and \texttt{Read} (from string)
 \end{itemize}
 \end{itemize}
-\part{Lecture 5: Algebraic Datatypes (ADTs)}
-\label{sec:org82edf15}
-\chapter{Defining Custom Types}
-\label{sec:org3b27008}
+\chapter{Lecture 5: Algebraic Datatypes (ADTs)}
+\label{sec:org6586f71}
+\section{Defining Custom Types}
+\label{sec:org8716247}
 \begin{itemize}
-\item \textbf{ADTs}: Sum of constructors, product of fields (`data T = C1 | C2 Int String`)
-\item \textbf{Deriving}: Automatic implementation of `Show`, `Eq`, `Read`
-\item \textbf{Type Parameters}: Generic types, e.g., `data Maybe a`
+\item \textbf{ADTs}: Sum of constructors, product of fields (\texttt{data T = C1 | C2 Int String})
+\item \textbf{Deriving}: Automatic implementation of \texttt{Show}, \texttt{Eq}, \texttt{Read}
+\item \textbf{Type Parameters}: Generic types, e.g., \texttt{data Maybe a}
 \end{itemize}
-\chapter{Recursive Types \& Trees}
-\label{sec:org2f3404b}
+\section{Recursive Types \& Trees}
+\label{sec:org527452b}
 \begin{itemize}
-\item \textbf{Recursive Types}: Types that refer to themselves (e.g., custom `List a`)
-\item \textbf{Trees}: `Node val left right | Empty`
+\item \textbf{Recursive Types}: Types that refer to themselves (e.g., custom \texttt{List a})
+\item \textbf{Trees}: \texttt{Node val left right | Empty}
 \item \textbf{Operations}: Height calculation, BST lookup, and insertion
 \end{itemize}
-\chapter{Record Syntax}
-\label{sec:orgadf22ef}
+\section{Record Syntax}
+\label{sec:org02b8590}
 \begin{itemize}
 \item Named fields instead of positional arguments
 \item Automatically generates accessor functions
 \item Improves readability and maintainability for large data structures
 \end{itemize}
-\part{Lecture 6: Working Class Hero}
-\label{sec:org552ebde}
+\chapter{Lecture 6: Working Class Hero}
+\label{sec:orgdf1f69f}
 
-\chapter{Lecture Contents:}
-\label{sec:org9634408}
+\section{Lecture Contents:}
+\label{sec:orgc321b0a}
 \begin{itemize}
 \item Defining new Type Classes
 \item Instantiating class using \(instance\) and \(deriving\) keywords
